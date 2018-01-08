@@ -1,0 +1,7 @@
+type HelloPayload {
+  description: String!
+}
+
+extend type Query {
+  hello(url: String): HelloPayload
+}
