@@ -5,13 +5,13 @@ import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 
 import { ApolloProvider } from 'react-apollo'
-import { ApolloCliennt } from 'apollo-client'
+import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
-import { InMemoryCache } from 'apollo-cache-memory'
+import { InMemoryCache } from 'apollo-cache-inmemory'
 
-const httpLink = new HttpLink({uri: '__SIMPLE_API_ENDPOINT__'})
+const httpLink = new HttpLink({uri: 'https://api.graph.cool/simple/v1/cjc6kt4kn05am0128e411za60'})
 
-const client = new ApolloCliennt({
+const client = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache()
 })
@@ -21,4 +21,5 @@ ReactDOM.render(
   <App />
   </ApolloProvider>
   , document.getElementById('root'));
+  
 registerServiceWorker();
