@@ -42,6 +42,7 @@ class CreateLink extends Component {
         url
       }
     })
+    this.props.history.push('/')
   }
 }
 
