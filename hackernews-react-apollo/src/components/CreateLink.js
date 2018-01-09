@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 
 class CreateLink extends Component {
   state = {
@@ -22,7 +24,7 @@ class CreateLink extends Component {
             value={this.state.url}
             onChange={(e) => this.setState({ url: e.target.value })}
             type='text'
-            palceholder='The URL for the link'
+            placeholder='The URL for the link'
           />
         </div>
         <button onClick={() => this._createLink()}>
@@ -33,7 +35,13 @@ class CreateLink extends Component {
   }
 
   _createLink = async () => {
-
+    const {description, url } = this.state
+    await this.props.createLinkMutation({
+      variables: {
+        description,
+        url
+      }
+    })
   }
 }
 
@@ -44,7 +52,6 @@ const CREATE_LINK_MUTATION = gql`
       url: $url,
     ){
       id
-      createdAt
       url
       description
     }
