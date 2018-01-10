@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { GC_USER_ID, GC_AUTH_TOKEN } from './constants'
+import { graphql, compose } from 'react-apollo'
+import gql from 'graphql-tag'
 
 class Login extends Component {
   
@@ -18,7 +20,7 @@ class Login extends Component {
           {!this.state.login && 
             <input
             value={this.state.name}
-            onChange={(e) => this.setState({ name: e.target.value})}
+            // onChange={(e) => this.setState({ name: e.target.value})}
             type='text'
             placeholder='Your Name'
             />}
@@ -54,13 +56,64 @@ class Login extends Component {
   }
 
   _confirm = async () => {
-
+    const { email, password } = this.state
+    try {
+      if(this.state.login){
+      const result = await this.props.authenticateUserMutation({
+        variables: {
+          email,
+          password
+        }
+      })
+      const { id, token } = result.data.authenticateUser;
+      this._saveUserData(id,token)
+    } else {
+      const result = await this.props.signupUserMutation({
+        variables: {
+          email,
+          password
+        }
+      })
+      const { id,token } = result.data.signupUser
+      this._saveUserData(id, token)
+    }
+    this.props.history.push('/')
+    } catch (e) {
+    console.log(e)
+    }
+    
   }
 
-  _saveUserDate = (id, token) => {
+  _saveUserData = (id, token) => {
     localStorage.setItem(GC_USER_ID, id)
     localStorage.setItem(GC_AUTH_TOKEN, token)
   }
 }
 
-export default Login
+const SIGNUP_USER_MUTATION = gql `
+  mutation SignupUserMutation($email: String!, $password: String!){
+    signupUser(
+      email: $email,
+      password: $password
+    ){
+      id
+      token
+    }
+  }
+`
+
+const AUTHENTICATE_USER_MUTATION = gql `
+  mutation AuthenticateUserMutation($email: String!, $password: String!){
+    authenticateUser(
+      email: $email,
+      password: $password
+    ){
+      id
+      token
+    }
+  }
+`
+export default compose(
+  graphql(SIGNUP_USER_MUTATION, {name: 'signupUserMutation'}),
+  graphql(AUTHENTICATE_USER_MUTATION, {name: 'authenticateUserMutation' })
+)(Login)
