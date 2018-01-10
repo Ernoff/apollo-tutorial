@@ -14,6 +14,8 @@ class Header extends Component {
           Hacker News
           </div>
           <Link to='/' className='ml1 no-underline black'>New</Link>
+          <div className='ml1'>|</div>
+          <Link to='/search' className='ml1 no-underline black'>search</Link>
           {userId && 
             <div className='flex'>
               <div className='ml1'>|</div>
