@@ -8,6 +8,7 @@ type Link @model {
   createdAt: DateTime! # read-only (managed by Graphcool)
   updatedAt: DateTime! # read-only (managed by Graphcool)
   postedBy: User @relation(name: "UsersLinks")
+  votes: [Vote!]! @relation(name: "VotesOnLink")
   # dateOfBirth: DateTime
 
   # Uncomment below - you can declare relations between models like this
@@ -33,11 +34,17 @@ type User @model {
   id: ID! @isUnique # read-only (managed by Graphcool)
 
   # Optional system fields (remove if not needed):
-  # createdAt: DateTime! # read-only (managed by Graphcool)
-  # updatedAt: DateTime! # read-only (managed by Graphcool)
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (managed by Graphcool)
   email: String! @isUnique
   password: String!
   links: [Link!]! @relation(name: "UsersLinks")
+  votes: [Vote!]! @relation(name: "UsersVotes")
+  
 }
 
-
+type Vote @model {
+  id: ID! @isUnique
+  user: User! @relation(name: "UsersVotes")
+  link: Link! @relation(name: "VotesOnLink")
+}
