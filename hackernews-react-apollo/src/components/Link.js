@@ -17,8 +17,8 @@ class Link extends Component {
         </div>
         <div className='ml1'>
           <div> {this.props.link.description} ({this.props.link.url}) </div>
-          <div className='f6 lh-copy gray'>{this.props.link.votes.length} Votes | by {this.props.link.postedBy ? this.props.link.postedBy.email : 'Unknown'}
-          {this.props.link.createdAt ? timeDifferenceForDate(this.props.link.createdAt) : 'no date'}</div>
+          <div className='f6 lh-copy gray'>{this.props.link.votes.length} Votes | by {this.props.link.postedBy ? this.props.link.postedBy.id : 'Unknown'}
+          {this.props.link.createdAt ? timeDifferenceForDate(this.props.link.createdAt) : '  no date'}</div>
         </div>
       </div>
     )
@@ -47,7 +47,7 @@ class Link extends Component {
 }
 
 
-const CREATE_VOTE_MUTATION = gql`
+const CREATE_VOTE_MUTATION = gql `
   mutation CreateVoteMutation($userId: ID!, $linkId: ID!){
     createVote(userId: $userId, linkId: $linkId){
       id
