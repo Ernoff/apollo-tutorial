@@ -1,6 +1,6 @@
 # Sample Application with Apollo Client and React
 
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app) for client and [Graphcool] (https://www.graph.cool) for server.
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app) for client and [Graphcool](https://www.graph.cool) for server.
 
 
 ## Requirement
